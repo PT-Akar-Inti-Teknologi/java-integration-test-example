@@ -42,13 +42,13 @@ class JsonPlaceHolderPostControllerTest {
   @Autowired
   private JsonPlaceHolderPostRepository jsonPlaceHolderPostRepository;
 
-    /**
-     * This method will test endpoint GET: {url}/post
-     * <br>Expected result is the endpoint will returning field response_schema, response_code, and response_message
-     *
-     * @throws Exception
-     * @see <a href="https://documenter.getpostman.com/view/25201895/2s8Z73xVro#ef29d6fd-c193-4935-88ee-61a2077f782a">Postman API link</a>
-     */
+  /**
+   * This method will test endpoint GET: {url}/post
+   * <br>Expected result is the endpoint will returning field response_schema, response_code, and response_message
+   *
+   * @throws Exception
+   * @see <a href="https://documenter.getpostman.com/view/25201895/2s8Z73xVro#ef29d6fd-c193-4935-88ee-61a2077f782a">Postman API link</a>
+   */
   @Test
   void getAllJsonPlaceHolderPost() throws Exception {
     mockMvc.perform(MockMvcRequestBuilders.get("/post")
@@ -68,9 +68,37 @@ class JsonPlaceHolderPostControllerTest {
   void getJsonPlaceHolderPostById() {
   }
 
+  /**
+   * This method will test endpoint POST: {url}/post
+   * <ul>
+   * <li>For request body, you must convert your object to json string first</li>
+   * <li>Expected result is to check whether default response content response is expected as we define at test method</li>
+   * </ul>
+   *
+   * @throws Exception
+   * @see <a href="https://documenter.getpostman.com/view/25201895/2s8Z73xVro#4311eb97-078e-442f-a2c2-e625d480a2b2">Postman API link</a>
+   */
   @Test
   void addPost() throws Exception {
-
+    mockMvc.perform(MockMvcRequestBuilders.post("/post")
+            .contentType(MediaType.APPLICATION_JSON)
+        // code below is for request body
+            .content("{\n" +
+                "    \"title\": \"test test\",\n" +
+                "    \"body\": \"testing@gmail.com\",\n" +
+                "    \"userId\": \"777\"\n" +
+                "}"))
+        .andExpect(MockMvcResultMatchers.status().isOk())
+        .andExpect(
+            MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+        // code below expected to check default response
+        .andExpect(MockMvcResultMatchers.jsonPath("$.response_schema").exists())
+        .andExpect(MockMvcResultMatchers.jsonPath("$.response_schema.response_code").exists())
+        .andExpect(MockMvcResultMatchers.jsonPath("$.response_schema.response_message").exists())
+        .andExpect(MockMvcResultMatchers.jsonPath("$.response_schema").exists())
+        // code below expected to check content response
+        .andExpect(MockMvcResultMatchers.jsonPath("$.response_output.detail.title").exists())
+        .andExpect(MockMvcResultMatchers.jsonPath("$.response_output.detail.title").value("test test"));
   }
 
 }
