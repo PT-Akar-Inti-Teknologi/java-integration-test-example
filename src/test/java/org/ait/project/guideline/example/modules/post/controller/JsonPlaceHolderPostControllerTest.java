@@ -51,7 +51,7 @@ class JsonPlaceHolderPostControllerTest {
   private JsonPlaceHolderClient jsonPlaceHolderClient;
 
   @Autowired
-  JsonPlaceHolderPostRepository jsonPlaceHolderPostRepository;
+  private JsonPlaceHolderPostRepository jsonPlaceHolderPostRepository;
 
   @BeforeEach
   void setup() {
@@ -75,7 +75,7 @@ class JsonPlaceHolderPostControllerTest {
    */
   @Test
   @Order(1)
-  void get_all_jsonplaceholder_post() throws Exception {
+  void get_all_post() throws Exception {
     jsonPlaceHolderPostRepository.deleteAll();
 
     PostResponse postResponse = new PostResponse();
@@ -98,9 +98,22 @@ class JsonPlaceHolderPostControllerTest {
         .andExpect(MockMvcResultMatchers.jsonPath("$.response_output.list.content", Matchers.hasSize(1)));
   }
 
+  /**
+   * This method will test endpoint GET: {url}/post-page?page=0&size=10
+   * <br>Expected result is the endpoint will returning field response_schema, response_code, and response_message
+   *
+   * @throws Exception
+   * @see <a href="https://documenter.getpostman.com/view/25201895/2s8Z73xVro#ef29d6fd-c193-4935-88ee-61a2077f782a">Postman API link</a>
+   * @author @fadhylfa / @frhn9
+   */
   @Test
   @Order(2)
-  void getAllJsonPlaceHolderPostPage() {
+  void get_all_post_page() throws Exception {
+    mockMvc.perform(MockMvcRequestBuilders.get("/post-page?page=0&size=10")
+            .contentType(MediaType.APPLICATION_JSON))
+        .andExpect(MockMvcResultMatchers.status().isOk())
+        .andExpect(MockMvcResultMatchers.jsonPath("$.response_output.list.pagination.size").value(10))
+        .andExpect(MockMvcResultMatchers.jsonPath("$.response_output.list.pagination.total").isNumber());
   }
 
    /**
@@ -116,8 +129,8 @@ class JsonPlaceHolderPostControllerTest {
    */
   @Test
   @Order(3)
-  void get_jsonplaceholderpost_by_id_when_found() throws Exception {
-    mockMvc.perform(MockMvcRequestBuilders.get("/1")
+  void get_post_by_id_when_found() throws Exception {
+    mockMvc.perform(MockMvcRequestBuilders.get("/2")
             .contentType(MediaType.APPLICATION_JSON))
         .andExpect(MockMvcResultMatchers.status().isOk());
   }
@@ -136,7 +149,7 @@ class JsonPlaceHolderPostControllerTest {
    */
   @Test
   @Order(4)
-  void get_jsonplaceholderpost_by_id_when_not_found() throws Exception {
+  void get_post_by_id_when_not_found() throws Exception {
     mockMvc.perform(MockMvcRequestBuilders.get("/666")
             .contentType(MediaType.APPLICATION_JSON))
         .andExpect(MockMvcResultMatchers.status().isNotFound())
