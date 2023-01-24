@@ -67,7 +67,10 @@ class JsonPlaceHolderPostControllerTest {
 
   /**
    * This method will test endpoint GET: {url}/post
-   * <br>Expected result is the endpoint will returning field response_schema, response_code, and response_message
+   * <ul>
+   * <li>This endpoint use custom repository method</li>
+   * <li>Expected json body is to check whether content response is expected as we define at test method</li>
+   * </ul>
    *
    * @throws Exception
    * @see <a href="https://documenter.getpostman.com/view/25201895/2s8Z73xVro#ef29d6fd-c193-4935-88ee-61a2077f782a">Postman API link</a>

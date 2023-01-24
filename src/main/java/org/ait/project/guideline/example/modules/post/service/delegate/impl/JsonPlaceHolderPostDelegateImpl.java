@@ -1,10 +1,10 @@
 package org.ait.project.guideline.example.modules.post.service.delegate.impl;
 
-import java.time.ZonedDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.ait.project.guideline.example.modules.post.exception.JPHNotFoundException;
 import org.ait.project.guideline.example.modules.post.model.entity.JsonPlaceHolderPost;
+import org.ait.project.guideline.example.modules.post.model.repository.JsonPlaceHolderPostCustomRepository;
 import org.ait.project.guideline.example.modules.post.model.repository.JsonPlaceHolderPostRepository;
 import org.ait.project.guideline.example.modules.post.service.delegate.JsonPlaceHolderPostDelegate;
 import org.springframework.data.domain.Page;
@@ -17,9 +17,11 @@ public class JsonPlaceHolderPostDelegateImpl implements JsonPlaceHolderPostDeleg
 
   private final JsonPlaceHolderPostRepository repository;
 
+  private final JsonPlaceHolderPostCustomRepository customRepository;
+
   @Override
   public List<JsonPlaceHolderPost> getAllPost() {
-    return repository.findAll();
+    return customRepository.findAll();
   }
 
   @Override
