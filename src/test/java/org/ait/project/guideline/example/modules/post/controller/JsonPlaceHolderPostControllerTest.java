@@ -88,16 +88,24 @@ class JsonPlaceHolderPostControllerTest {
     postResponse.setUserId(1);
     List<PostResponse> postResponseList = Collections.singletonList(postResponse);
 
+    // if there are third party api to integrate, then create its mock
     Mockito.when(jsonPlaceHolderClient.getListPost()).thenReturn(postResponseList);
 
+    // if controller are @GetMapping, then perform MockMvcRequestBuilders.get({url})
     mockMvc.perform(MockMvcRequestBuilders.get("/post")
+            // to check if content from request is application/json
             .contentType(MediaType.APPLICATION_JSON))
+            // to check if http response status is 200 OK
         .andExpect(MockMvcResultMatchers.status().isOk())
+            // to check if response content is application/json
         .andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+            // to check if response field containts "response_schema"
         .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("response_schema")))
         .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("response_code")))
         .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString("response_message")))
+            // to check if json path is returning array/list
         .andExpect(MockMvcResultMatchers.jsonPath("$.response_output.list.content").isArray())
+            // to check if json array has 1 object
         .andExpect(MockMvcResultMatchers.jsonPath("$.response_output.list.content", Matchers.hasSize(1)));
   }
 
