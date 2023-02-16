@@ -1,7 +1,8 @@
-# `AIT SPRING BOOT GUIDELINE EXAMPLE`
+# `AIT SPRING BOOT INTEGRATION TEST EXAMPLE`
 ## `By PT Akarinti Teknologi`
 
-link guideline [Link](https://docs.google.com/presentation/d/1i8YEQ6zQlcZDB7472bNmymiwLluMaMCMVzoaj_Awk6U/edit?usp=sharing)
+link guideline [Link](https://docs.google.com/presentation/d/1i8YEQ6zQlcZDB7472bNmymiwLluMaMCMVzoaj_Awk6U/edit?usp=sharing) <br>
+link postman example [Postman API](https://documenter.getpostman.com/view/25201895/2s8Z73xVro#4311eb97-078e-442f-a2c2-e625d480a2b2)
 
 ## `Specification:`
 
